@@ -1,0 +1,9 @@
+---
+
+pystemon_pkg:
+  - python-yaml
+  - python-beautifulsoup
+  - supervisor
+  - python-redis
+  - redis-server
+

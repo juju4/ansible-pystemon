@@ -1,0 +1,11 @@
+## /etc/supervisor/conf.d/pystemon.conf
+[program:pystemon]
+command={{ pystemon_root }}/pystemon.py
+directory={{ pystemon_root }}
+user={{ pystemon_user }}
+stdout_logfile=/var/log/supervisor/pystemon.log
+redirect_stderr=true
+autostart=true
+autorestart=true
+startsecs=10
+

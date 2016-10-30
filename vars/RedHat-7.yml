@@ -1,0 +1,12 @@
+---
+
+pystemon_pkg:
+  - python-yaml
+  - python-beautifulsoup
+  - supervisor
+  - python-redis
+  - redis
+
+supervisor_confdir: /etc/supervisord.d
+supervisor_ext: ini
+supervisor_service: supervisord

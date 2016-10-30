@@ -1,0 +1,45 @@
+---
+
+- name: Include version-specific variables for Ubuntu.
+  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+  when: ansible_distribution == 'Ubuntu'
+- name: Include version-specific variables for RedHat
+  include_vars: "RedHat-{{ ansible_distribution_version.split('.')[0] }}.yml"
+  when: ansible_os_family == "RedHat" or ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+#- include: debian.yml
+#  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+#- include: redhat.yml
+#  when: ansible_os_family == "RedHat" or ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: install package dependencies
+  package: name={{ item }} state=present
+  with_items: "{{ pystemon_pkg }}"
+
+- name: create pystemon user
+  user: name="{{ pystemon_user }}" home="{{ pystemon_home }}" comment="pystemon app user" shell=/bin/bash
+
+- name: git clone pystemon
+  git: repo=https://github.com/CIRCL/pystemon.git
+       dest="{{ pystemon_root }}"
+  ignore_errors: true
+  become: yes
+  become_user: "{{ pystemon_user }}"
+
+- name: check if existing config
+  stat: path=/etc/pystemon.yaml
+  register: conffile
+- name: create config files from default
+#  command: "rsync -ci --chown={{ pystemon_user }} {{ pystemon_root }}/pystemon.yaml /etc/pystemon.yaml creates=/etc/pystemon.yaml"
+  command: "rsync -ci {{ pystemon_root }}/pystemon.yaml /etc/pystemon.yaml creates=/etc/pystemon.yaml"
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+  when: not conffile.stat.exists
+
+- name: configure pystemon in supervisor
+  template: "src=supervisor-pystemon.conf.j2 dest={{ supervisor_confdir }}/pystemon.{{ supervisor_ext }} mode=0644"
+  notify:
+    - supervisor update
+
+
