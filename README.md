@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/juju4/ansible-pystemon.svg?branch=master)](https://travis-ci.org/juju4/ansible-pystemon)
+[![Build Status - Master](https://travis-ci.org/juju4/ansible-pystemon.svg?branch=master)](https://travis-ci.org/juju4/ansible-pystemon)
+[![Build Status - Devel](https://travis-ci.org/juju4/ansible-pystemon.svg?branch=devel)](https://travis-ci.org/juju4/ansible-pystemon/branches)
 # Pystemon ansible role
 
 Ansible role to setup Pystemon
@@ -9,6 +10,7 @@ https://github.com/CIRCL/pystemon/
 ### Ansible
 It was tested on the following versions:
  * 2.1
+ * 2.2
 
 ### Operating systems
 
