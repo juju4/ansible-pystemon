@@ -3,6 +3,7 @@
 pystemon_pkg:
   - python-yaml
   - python-beautifulsoup
+  - python-requests
   - supervisor
   - python-redis
   - redis
