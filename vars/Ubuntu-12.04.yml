@@ -8,3 +8,4 @@ pystemon_pkg:
   - python-redis
   - redis-server
 
+pystemon_pip: []

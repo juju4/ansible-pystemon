@@ -8,6 +8,8 @@ pystemon_pkg:
   - python-redis
   - redis-server
 
+pystemon_pip: []
+
 supervisor_confdir: /etc/supervisor/conf.d
 supervisor_ext: conf
 supervisor_service: supervisor

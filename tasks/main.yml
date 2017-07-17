@@ -17,6 +17,12 @@
   package: name={{ item }} state=present
   with_items: "{{ pystemon_pkg }}"
 
+- name: install pip dependencies
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ pystemon_pip }}"
+
 - name: create pystemon user
   user: name="{{ pystemon_user }}" home="{{ pystemon_home }}" comment="pystemon app user" shell=/bin/bash
 
@@ -41,5 +47,3 @@
   template: "src=supervisor-pystemon.conf.j2 dest={{ supervisor_confdir }}/pystemon.{{ supervisor_ext }} mode=0644"
   notify:
     - supervisor update
-
-

@@ -3,10 +3,15 @@
 pystemon_pkg:
   - python-yaml
   - python-beautifulsoup
-  - python-requests
   - supervisor
   - python-redis
   - redis
+## https://github.com/requests/requests/issues/2430
+#  - python-requests
+  - python-pip
+
+pystemon_pip:
+  - requests
 
 supervisor_confdir: /etc/supervisord.d
 supervisor_ext: ini
