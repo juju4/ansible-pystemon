@@ -2,8 +2,8 @@
 
 - hosts: all
 #- hosts: test-kitchen
-  vars:
-    - pystemon_virtualenv: ''
+#  vars:
+#    - a:
   roles:
     - juju4.pystemon
 
