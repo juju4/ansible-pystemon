@@ -1,11 +1,15 @@
 ---
 
 pystemon_pkg:
-  - python-yaml
-  - python-beautifulsoup
-  - python-requests
+#  - python-yaml
+#  - python-beautifulsoup
+#  - python-requests
   - supervisor
-  - python-redis
+#  - python-redis
   - redis-server
 
-pystemon_pip: []
+pystemon_pip:
+  - PyYAML
+  - beautifulsoup4
+  - requests
+  - redis
