@@ -13,7 +13,7 @@ describe file('/var/_pystemon/pystemon/pystemon.py') do
   it { should be_executable }
 end
 
-describe command('pip freeze') do
+describe command('/var/_pystemon/env-pystemon/bin/pip freeze') do
   its(:stdout) { should match /PyYAML/ }
   its(:stdout) { should match /redis/ }
   its(:stdout) { should match /requests/ }
