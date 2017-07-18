@@ -36,12 +36,12 @@ env:
     version: 7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    ansible_extra_vars: '-e pystemon_virtualenv=""'
+    ansible_extra_vars: "'-e pystemon_virtualenv=\"\"'"
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    ansible_extra_vars: '-e pystemon_virtualenv=""'
+    ansible_extra_vars: "'-e pystemon_virtualenv=\"\"'"
 
 services:
   - docker
