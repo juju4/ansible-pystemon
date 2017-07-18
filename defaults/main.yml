@@ -3,10 +3,11 @@
 pystemon_user: _pystemon
 pystemon_home: /var/_pystemon
 pystemon_root: "{{ pystemon_home }}/pystemon"
+## if undefined or empty, virtualenv will not be used
+pystemon_virtualenv: "{{ pystemon_home }}/env-pystemon"
 
 ## TODO
 pystemon_use_redis: true
 pystemon_redis_host: localhost
 pystemon_redis_port: 6379
 pystemon_redis_db: 10
-

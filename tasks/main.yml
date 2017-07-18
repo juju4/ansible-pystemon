@@ -17,11 +17,13 @@
   package: name={{ item }} state=present
   with_items: "{{ pystemon_pkg }}"
 
-- name: install pip dependencies
-  pip:
-    name: "{{ item }}"
-    state: present
-  with_items: "{{ pystemon_pip }}"
+- block:
+    - name: install pip dependencies
+      pip:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ pystemon_pip }}"
+  when: pystemon_virtualenv is not defined or pystemon_virtualenv == ''
 
 - name: create pystemon user
   user: name="{{ pystemon_user }}" home="{{ pystemon_home }}" comment="pystemon app user" shell=/bin/bash
@@ -32,6 +34,25 @@
   ignore_errors: true
   become: yes
   become_user: "{{ pystemon_user }}"
+
+- block:
+    - name: ensure virtualenv is present
+      package:
+        name: python-virtualenv
+        state: present
+    - name: install pip dependencies
+      pip:
+        name: "{{ item }}"
+        state: present
+        virtualenv: "{{ pystemon_virtualenv }}"
+      with_items: "{{ pystemon_pip }}"
+    - name: update python path
+      replace:
+        dest: "{{ pystemon_root }}/pystemon.py"
+        regexp: "/usr/bin/env python"
+        replace: "{{ pystemon_virtualenv }}/bin/python"
+        backup: yes
+  when: pystemon_virtualenv is defined and pystemon_virtualenv != ''
 
 - name: check if existing config
   stat: path=/etc/pystemon.yaml
