@@ -1,16 +1,19 @@
 ---
 
 pystemon_pkg:
-  - python-yaml
-  - python-beautifulsoup
+#  - python-yaml
+#  - python-beautifulsoup
   - supervisor
-  - python-redis
+#  - python-redis
   - redis
 ## https://github.com/requests/requests/issues/2430
 #  - python-requests
   - python-pip
 
 pystemon_pip:
+  - PyYAML
+  - beautifulsoup4
+  - redis
   - requests
 
 supervisor_confdir: /etc/supervisord.d
