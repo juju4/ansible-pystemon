@@ -58,10 +58,11 @@
   stat: path=/etc/pystemon.yaml
   register: conffile
 - name: create config files from default
-#  command: "rsync -ci --chown={{ pystemon_user }} {{ pystemon_root }}/pystemon.yaml /etc/pystemon.yaml creates=/etc/pystemon.yaml"
-  command: "rsync -ci {{ pystemon_root }}/pystemon.yaml /etc/pystemon.yaml creates=/etc/pystemon.yaml"
-  register: rsync_result
-  changed_when: 'rsync_result.stdout != ""'
+  copy:
+    src: "{{ pystemon_root }}/pystemon.yaml"
+    dest: "/etc/pystemon.yaml"
+    remote_src: true
+    owner: "{{ pystemon_user }}"
   when: not conffile.stat.exists
 
 - name: configure pystemon in supervisor
