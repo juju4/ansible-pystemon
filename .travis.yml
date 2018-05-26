@@ -11,14 +11,18 @@ env:
   - distribution: centos
     version: 7
     init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
+    ansible_extra_vars: ''
+  - distribution: ubuntu
+    version: 18.04
+    init: /lib/systemd/systemd
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     ansible_extra_vars: ''
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     ansible_extra_vars: ''
-#    run_opts: "--cap-add SYS_ADMIN"
 ## FIXME! travis/trusty stalling
 #  - distribution: ubuntu
 #    version: 14.04
@@ -35,12 +39,12 @@ env:
   - distribution: centos
     version: 7
     init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     ansible_extra_vars: "'-e pystemon_virtualenv=\"\"'"
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     ansible_extra_vars: "'-e pystemon_virtualenv=\"\"'"
 
 services:
