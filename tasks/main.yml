@@ -5,32 +5,30 @@
   when: ansible_distribution == 'Ubuntu'
 - name: Include version-specific variables for RedHat
   include_vars: "RedHat-{{ ansible_distribution_version.split('.')[0] }}.yml"
-  when: ansible_os_family == "RedHat" or ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
-
-#- include: debian.yml
-#  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-
-#- include: redhat.yml
-#  when: ansible_os_family == "RedHat" or ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  when: ansible_os_family == "RedHat"
 
 - name: install package dependencies
-  package: name={{ item }} state=present
-  with_items: "{{ pystemon_pkg }}"
+  package: name={{ pystemon_pkg }} state=present
+  register: pkg_result
+  until: pkg_result is success
 
 - block:
     - name: install pip dependencies
       pip:
-        name: "{{ item }}"
+        name: "{{ pystemon_pip }}"
         state: present
-      with_items: "{{ pystemon_pip }}"
+      register: pkg_result
+      until: pkg_result is success
   when: pystemon_virtualenv is not defined or pystemon_virtualenv == ''
 
 - name: create pystemon user
   user: name="{{ pystemon_user }}" home="{{ pystemon_home }}" comment="pystemon app user" shell=/bin/bash
 
 - name: git clone pystemon
-  git: repo=https://github.com/CIRCL/pystemon.git
-       dest="{{ pystemon_root }}"
+  git:
+    repo: https://github.com/CIRCL/pystemon.git
+    dest: "{{ pystemon_root }}"
+    version: "{{ pystemon_version | default('7366cace7ac4e66b3beb2efe192ffd59712058f2') }}"
   ignore_errors: true
   become: yes
   become_user: "{{ pystemon_user }}"
@@ -40,12 +38,15 @@
       package:
         name: python-virtualenv
         state: present
+      register: pkg_result
+      until: pkg_result is success
     - name: install pip dependencies
       pip:
-        name: "{{ item }}"
+        name: "{{ pystemon_pip }}"
         state: present
         virtualenv: "{{ pystemon_virtualenv }}"
-      with_items: "{{ pystemon_pip }}"
+      register: pkg_result
+      until: pkg_result is success
     - name: update python path
       replace:
         dest: "{{ pystemon_root }}/pystemon.py"
@@ -66,6 +67,9 @@
   when: not conffile.stat.exists
 
 - name: configure pystemon in supervisor
-  template: "src=supervisor-pystemon.conf.j2 dest={{ supervisor_confdir }}/pystemon.{{ supervisor_ext }} mode=0644"
+  template:
+    src: supervisor-pystemon.conf.j2
+    dest: "{{ supervisor_confdir }}/pystemon.{{ supervisor_ext }}"
+    mode: '0644'
   notify:
     - supervisor update
