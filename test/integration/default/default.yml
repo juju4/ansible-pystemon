@@ -6,4 +6,3 @@
     - pystemon_virtualenv: ''
   roles:
     - juju4.pystemon
-
