@@ -8,6 +8,10 @@ pystemon_pkg:
 #  - python-redis
   - redis-server
 
+pystemon_python_pkgs:
+  - python3-virtualenv
+  - python3-pip
+
 pystemon_pip:
   - PyYAML
   - beautifulsoup4
