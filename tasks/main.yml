@@ -36,7 +36,7 @@
 - block:
     - name: ensure virtualenv is present
       package:
-        name: python-virtualenv
+        name: "{{ pystemon_python_pkgs | default([ 'python-virtualenv', 'python-pip']) }}"
         state: present
       register: pkg_result
       until: pkg_result is success
