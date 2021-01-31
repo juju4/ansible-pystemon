@@ -1,0 +1,35 @@
+---
+
+- name: Verify
+  hosts: pystemon
+  tasks:
+    - name: Ensure /var/_pystemon/pystemon/pystemon.py file is present
+      stat:
+        path: /var/_pystemon/pystemon/pystemon.py
+      register: py
+    - name: Validate pystemon.py present
+      assert:
+        that: py.stat.exists and py.stat.size != 0 and py.stat.mode == '0755'
+
+    - name: pip freeze
+      command: pip freeze
+      changed_when: false
+      register: freeze
+    - name: Validate pip modules
+      assert:
+        that: >
+          "item in freeze.stdout and freeze.rc == 0"
+      with_items:
+        - PyYAML
+        - redis
+        - requests
+        - urllib
+
+    - name: help command
+      command: /var/_pystemon/pystemon/pystemon.py -h
+      changed_when: false
+      register: h
+    - name: Validate help command
+      assert:
+        that: >
+          "'Usage: pystemon.py' in h.stdout and h.rc == 0"
