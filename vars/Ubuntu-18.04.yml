@@ -10,6 +10,7 @@ pystemon_pkg:
   - redis-server
 
 pystemon_python_pkgs:
+  - python-virtualenv
   - python3-virtualenv
   - python3-pip
 
