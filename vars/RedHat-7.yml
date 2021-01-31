@@ -17,6 +17,8 @@ pystemon_pip:
   - redis
   - requests
 
+pystemon_python_bin: python
+
 supervisor_confdir: /etc/supervisord.d
 supervisor_ext: ini
 supervisor_service: supervisord

@@ -45,6 +45,7 @@
         name: "{{ pystemon_pip }}"
         state: present
         virtualenv: "{{ pystemon_virtualenv }}"
+        virtualenv_python: "{{ pystemon_python_bin | default('python3') }}"
       register: pkg_result
       until: pkg_result is success
     - name: update python path
