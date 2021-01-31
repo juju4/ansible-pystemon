@@ -19,7 +19,7 @@
         state: present
       register: pkg_result
       until: pkg_result is success
-  when: pystemon_virtualenv is not defined or pystemon_virtualenv == ''
+  when: pystemon_virtualenv is not defined or not pystemon_virtualenv|string
 
 - name: create pystemon user
   user: name="{{ pystemon_user }}" home="{{ pystemon_home }}" comment="pystemon app user" shell=/bin/bash
@@ -52,8 +52,9 @@
         dest: "{{ pystemon_root }}/pystemon.py"
         regexp: "/usr/bin/env python"
         replace: "{{ pystemon_virtualenv }}/bin/python"
+        mode: '0755'
         backup: yes
-  when: pystemon_virtualenv is defined and pystemon_virtualenv != ''
+  when: pystemon_virtualenv is defined and pystemon_virtualenv|string
 
 - name: check if existing config
   stat: path=/etc/pystemon.yaml
@@ -62,6 +63,7 @@
   copy:
     src: "{{ pystemon_root }}/pystemon.yaml"
     dest: "/etc/pystemon.yaml"
+    mode: '0644'
     remote_src: true
     owner: "{{ pystemon_user }}"
   when: not conffile.stat.exists
