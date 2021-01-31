@@ -1,6 +1,7 @@
 ---
 
 pystemon_pkg:
+  - git
   # - python-yaml
   # - python-beautifulsoup
   - supervisor
