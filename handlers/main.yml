@@ -2,3 +2,9 @@
 
 - name: supervisor update
   service: name={{ supervisor_service }} state=restarted sleep=5
+  when: >
+    not (
+      ansible_os_family == "RedHat" and ansible_virtualization_type is defined and (
+        ansible_virtualization_type == "docker" or ansible_virtualization_type == "VirtualPC"
+      )
+    )
