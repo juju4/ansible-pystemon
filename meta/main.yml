@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: pystemon
   author: juju4
   description: Pystemon, Monitoring tool for PasteBin-alike sites written in Python
   license: BSD
