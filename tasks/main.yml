@@ -29,7 +29,6 @@
     repo: https://github.com/CIRCL/pystemon.git
     dest: "{{ pystemon_root }}"
     version: "{{ pystemon_version | default('66303e5ef555f5744a2610ba50e70c43f47b7a7b') }}"
-  ignore_errors: true
   become: yes
   become_user: "{{ pystemon_user }}"
 
