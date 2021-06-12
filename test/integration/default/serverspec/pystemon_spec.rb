@@ -25,4 +25,3 @@ describe command('/var/_pystemon/pystemon/pystemon.py -h') do
   its(:stdout) { should match /Usage: pystemon.py/ }
   its(:exit_status) { should eq 0 }
 end
-
