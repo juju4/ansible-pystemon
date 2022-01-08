@@ -1,5 +1,6 @@
 ---
 
+pystemon_version: 2743b7a22120319be0e9b222813e3bc2c5024802
 pystemon_user: _pystemon
 pystemon_home: /var/_pystemon
 pystemon_root: "{{ pystemon_home }}/pystemon"

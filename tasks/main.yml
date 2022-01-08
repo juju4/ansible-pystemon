@@ -26,9 +26,9 @@
 
 - name: git clone pystemon
   git:
-    repo: https://github.com/CIRCL/pystemon.git
+    repo: https://github.com/cvandeplas/pystemon.git
     dest: "{{ pystemon_root }}"
-    version: "{{ pystemon_version | default('66303e5ef555f5744a2610ba50e70c43f47b7a7b') }}"
+    version: "{{ pystemon_version }}"
     update: no
   become: yes
   become_user: "{{ pystemon_user }}"
