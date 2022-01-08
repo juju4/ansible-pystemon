@@ -8,11 +8,7 @@
         pip_bin: pip3
       when: >
         (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 18) or
-        (ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 8)
-    - name: Centos 7 | set fact
-      set_fact:
-        pip_bin: pip
-      when: (ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 7)
+        (ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7)
   tasks:
     - name: Ensure /var/_pystemon/pystemon/pystemon.py file is present
       stat:
