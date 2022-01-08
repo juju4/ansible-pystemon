@@ -9,7 +9,12 @@ pystemon_pkg:
   - redis
   ## https://github.com/requests/requests/issues/2430
   # - python-requests
-  - python-pip
+  - python3
+  - python3-pip
+
+pystemon_python_pkgs:
+  - python-virtualenv
+  - python3-pip
 
 pystemon_pip:
   - PyYAML
@@ -17,7 +22,7 @@ pystemon_pip:
   - redis
   - requests
 
-pystemon_python_bin: python
+pystemon_python_bin: python3
 
 supervisor_confdir: /etc/supervisord.d
 supervisor_ext: ini
