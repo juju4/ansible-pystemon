@@ -4,26 +4,26 @@
   hosts: pystemon
   pre_tasks:
     - name: Ubuntu 18.04+ | set fact
-      set_fact:
+      ansible.builtin.set_fact:
         pip_bin: pip3
       when: >
         (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 18) or
         (ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7)
   tasks:
     - name: Ensure /var/_pystemon/pystemon/pystemon.py file is present
-      stat:
+      ansible.builtin.stat:
         path: /var/_pystemon/pystemon/pystemon.py
       register: py
     - name: Validate pystemon.py present
-      assert:
+      ansible.builtin.assert:
         that: py.stat.exists and py.stat.size != 0 and py.stat.mode == '0755'
 
     - name: pip freeze
-      command: "{{ pip_bin }} freeze"
+      ansible.builtin.command: "{{ pip_bin }} freeze"
       changed_when: false
       register: freeze
     - name: Validate pip modules
-      assert:
+      ansible.builtin.assert:
         that: >
           "item in freeze.stdout and freeze.rc == 0"
       with_items:
@@ -33,10 +33,10 @@
         - urllib
 
     - name: help command
-      command: /var/_pystemon/pystemon/pystemon.py -h
+      ansible.builtin.command: /var/_pystemon/pystemon/pystemon.py -h
       changed_when: false
       register: h
     - name: Validate help command
-      assert:
+      ansible.builtin.assert:
         that: >
           "'Usage: pystemon.py' in h.stdout and h.rc == 0"

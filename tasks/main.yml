@@ -1,20 +1,20 @@
 ---
 
 - name: Include version-specific variables for Ubuntu.
-  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
   when: ansible_distribution == 'Ubuntu'
 - name: Include version-specific variables for RedHat
-  include_vars: "RedHat-{{ ansible_distribution_version.split('.')[0] }}.yml"
+  ansible.builtin.include_vars: "RedHat-{{ ansible_distribution_version.split('.')[0] }}.yml"
   when: ansible_os_family == "RedHat"
 
 - name: install package dependencies
-  package: name={{ pystemon_pkg }} state=present
+  ansible.builtin.package: name={{ pystemon_pkg }} state=present
   register: pkg_result
   until: pkg_result is success
 
 - block:
     - name: install pip dependencies
-      pip:
+      ansible.builtin.pip:
         name: "{{ pystemon_pip }}"
         state: present
       register: pkg_result
@@ -22,10 +22,10 @@
   when: pystemon_virtualenv is not defined or not pystemon_virtualenv|string
 
 - name: create pystemon user
-  user: name="{{ pystemon_user }}" home="{{ pystemon_home }}" comment="pystemon app user" shell=/bin/bash
+  ansible.builtin.user: name="{{ pystemon_user }}" home="{{ pystemon_home }}" comment="pystemon app user" shell=/bin/bash
 
 - name: git clone pystemon
-  git:
+  ansible.builtin.git:
     repo: https://github.com/cvandeplas/pystemon.git
     dest: "{{ pystemon_root }}"
     version: "{{ pystemon_version }}"
@@ -35,13 +35,13 @@
 
 - block:
     - name: ensure virtualenv is present
-      package:
+      ansible.builtin.package:
         name: "{{ pystemon_python_pkgs | default([ 'python-virtualenv', 'python-pip']) }}"
         state: present
       register: pkg_result
       until: pkg_result is success
     - name: install pip dependencies
-      pip:
+      ansible.builtin.pip:
         name: "{{ pystemon_pip }}"
         state: present
         virtualenv: "{{ pystemon_virtualenv }}"
@@ -49,7 +49,7 @@
       register: pkg_result
       until: pkg_result is success
     - name: update python path
-      replace:
+      ansible.builtin.replace:
         dest: "{{ pystemon_root }}/pystemon.py"
         regexp: "/usr/bin/env python"
         replace: "{{ pystemon_virtualenv }}/bin/python"
@@ -58,10 +58,10 @@
   when: pystemon_virtualenv is defined and pystemon_virtualenv|string
 
 - name: check if existing config
-  stat: path=/etc/pystemon.yaml
+  ansible.builtin.stat: path=/etc/pystemon.yaml
   register: conffile
 - name: create config files from default
-  copy:
+  ansible.builtin.copy:
     src: "{{ pystemon_root }}/pystemon.yaml"
     dest: "/etc/pystemon.yaml"
     mode: '0644'
@@ -70,7 +70,7 @@
   when: not conffile.stat.exists
 
 - name: configure pystemon in supervisor
-  template:
+  ansible.builtin.template:
     src: supervisor-pystemon.conf.j2
     dest: "{{ supervisor_confdir }}/pystemon.{{ supervisor_ext }}"
     mode: '0644'
