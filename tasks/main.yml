@@ -12,7 +12,8 @@
   register: pkg_result
   until: pkg_result is success
 
-- block:
+- name: system pip
+  block:
     - name: install pip dependencies
       ansible.builtin.pip:
         name: "{{ pystemon_pip }}"
@@ -33,7 +34,8 @@
   become: yes
   become_user: "{{ pystemon_user }}"
 
-- block:
+- name: virtualenv pip
+  block:
     - name: ensure virtualenv is present
       ansible.builtin.package:
         name: "{{ pystemon_python_pkgs | default([ 'python-virtualenv', 'python-pip']) }}"
