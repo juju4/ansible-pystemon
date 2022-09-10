@@ -1,6 +1,6 @@
 ---
 
-- name: supervisor update
+- name: Supervisor update
   ansible.builtin.service: name={{ supervisor_service }} state=restarted sleep=5
   when: >
     not (
