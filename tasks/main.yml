@@ -8,11 +8,14 @@
   when: ansible_os_family == "RedHat"
 
 - name: Install package dependencies
-  ansible.builtin.package: name={{ pystemon_pkg }} state=present
+  ansible.builtin.package:
+    name: "{{ pystemon_pkg }}"
+    state: "present"
   register: pkg_result
   until: pkg_result is success
 
 - name: System pip
+  when: pystemon_virtualenv is not defined or not pystemon_virtualenv | string
   block:
     - name: Install pip dependencies
       ansible.builtin.pip:
@@ -20,10 +23,14 @@
         state: present
       register: pkg_result
       until: pkg_result is success
-  when: pystemon_virtualenv is not defined or not pystemon_virtualenv | string
 
 - name: Create pystemon user
-  ansible.builtin.user: name="{{ pystemon_user }}" home="{{ pystemon_home }}" comment="pystemon app user" shell=/bin/bash
+  ansible.builtin.user:
+    name: "{{ pystemon_user }}"
+    home: "{{ pystemon_home }}"
+    comment: "pystemon app user"
+    shell: /bin/bash
+    system: yes
 
 - name: Git clone pystemon
   ansible.builtin.git:
@@ -35,6 +42,7 @@
   become_user: "{{ pystemon_user }}"
 
 - name: Virtualenv pip
+  when: pystemon_virtualenv is defined and pystemon_virtualenv | string
   block:
     - name: Ensure virtualenv is present
       ansible.builtin.package:
@@ -57,10 +65,10 @@
         replace: "{{ pystemon_virtualenv }}/bin/python"
         mode: '0755'
         backup: yes
-  when: pystemon_virtualenv is defined and pystemon_virtualenv | string
 
 - name: Check if existing config
-  ansible.builtin.stat: path=/etc/pystemon.yaml
+  ansible.builtin.stat:
+    path: /etc/pystemon.yaml
   register: conffile
 - name: Create config files from default
   ansible.builtin.copy:
