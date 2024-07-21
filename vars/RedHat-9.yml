@@ -1,0 +1,24 @@
+---
+
+pystemon_pkg:
+  - git
+  - supervisor
+  - redis
+  ## https://github.com/requests/requests/issues/2430
+  - python3-pip
+
+pystemon_python_pkgs:
+  - python3-virtualenv
+  - python3-pip
+
+pystemon_pip:
+  - PyYAML
+  - beautifulsoup4
+  - redis
+  - requests
+
+pystemon_python_bin: python3
+
+supervisor_confdir: /etc/supervisord.d
+supervisor_ext: ini
+supervisor_service: supervisord
