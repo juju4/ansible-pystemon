@@ -3,12 +3,9 @@
 - name: Verify
   hosts: pystemon
   pre_tasks:
-    - name: Ubuntu 18.04+ | set fact
+    - name: Set fact
       ansible.builtin.set_fact:
         pip_bin: pip3
-      when: >
-        (ansible_distribution == "Ubuntu" and ansible_distribution_major_version | int >= 18) or
-        (ansible_os_family == "RedHat" and ansible_distribution_major_version | int >= 7)
   tasks:
     - name: Ensure /var/_pystemon/pystemon/pystemon.py file is present
       ansible.builtin.stat:
