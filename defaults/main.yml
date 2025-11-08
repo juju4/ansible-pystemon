@@ -1,6 +1,8 @@
 ---
 
-pystemon_version: 2743b7a22120319be0e9b222813e3bc2c5024802
+# No releases
+# renovate: datasource=github-releases depName=CIRCL/pystemon
+pystemon_version: 'e75c567a85314d288235af6058a128b75e56c86a'
 pystemon_user: _pystemon
 pystemon_home: /var/_pystemon
 pystemon_root: "{{ pystemon_home }}/pystemon"
