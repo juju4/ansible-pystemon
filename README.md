@@ -6,6 +6,8 @@
 Ansible role to setup Pystemon
 https://github.com/CIRCL/pystemon/
 
+Warning! No commits since Jan 2021.
+
 ## Requirements & Dependencies
 
 ### Ansible
