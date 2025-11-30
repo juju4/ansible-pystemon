@@ -21,8 +21,9 @@
       register: freeze
     - name: Validate pip modules
       ansible.builtin.assert:
-        that: >
-          "item in freeze.stdout and freeze.rc == 0"
+        that:
+          - item in freeze.stdout
+          - freeze.rc == 0
       with_items:
         - PyYAML
         - redis
@@ -35,5 +36,6 @@
       register: h
     - name: Validate help command
       ansible.builtin.assert:
-        that: >
-          "'Usage: pystemon.py' in h.stdout and h.rc == 0"
+        that:
+          - "'Usage: pystemon.py' in h.stdout"
+          - h.rc == 0
