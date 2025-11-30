@@ -45,7 +45,9 @@
   become_user: "{{ pystemon_user }}"
 
 - name: Virtualenv pip
-  when: pystemon_virtualenv is defined and pystemon_virtualenv | string
+  when:
+    - pystemon_virtualenv is defined
+    - pystemon_virtualenv | length > 0
   block:
     - name: Ensure virtualenv is present
       ansible.builtin.package:
