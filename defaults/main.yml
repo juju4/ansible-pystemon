@@ -1,8 +1,8 @@
 ---
 
 # No releases
-# renovate: datasource=github-releases depName=CIRCL/pystemon
-pystemon_version: 'e75c567a85314d288235af6058a128b75e56c86a'
+# renovate: datasource=github-releases depName=cvandeplas/pystemon
+pystemon_version: '7e3665674f60250c198b23ad4b87d4393e8e65bb'
 pystemon_user: _pystemon
 pystemon_home: /var/_pystemon
 pystemon_root: "{{ pystemon_home }}/pystemon"
