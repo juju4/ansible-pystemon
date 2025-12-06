@@ -2,10 +2,10 @@
 
 - name: Verify
   hosts: pystemon
-  pre_tasks:
-    - name: Set fact
-      ansible.builtin.set_fact:
-        pip_bin: pip3
+  vars:
+    pystemon_home: /var/_pystemon
+    pystemon_virtualenv: "{{ pystemon_home }}/env-pystemon"
+    pip_bin: "{{ pystemon_virtualenv }}/bin/pip"
   tasks:
     - name: Ensure /var/_pystemon/pystemon/pystemon.py file is present
       ansible.builtin.stat:
