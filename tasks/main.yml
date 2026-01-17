@@ -1,5 +1,4 @@
 ---
-
 - name: Include version-specific variables for Debian
   ansible.builtin.include_vars: "Debian-{{ ansible_facts['distribution_major_version'] }}.yml"
   when: ansible_facts['os_family'] == "Debian" and ansible_facts['distribution'] != "Ubuntu"
@@ -33,15 +32,15 @@
     home: "{{ pystemon_home }}"
     comment: "pystemon app user"
     shell: /bin/bash
-    system: yes
+    system: true
 
 - name: Git clone pystemon
   ansible.builtin.git:
     repo: https://github.com/cvandeplas/pystemon.git
     dest: "{{ pystemon_root }}"
     version: "{{ pystemon_version }}"
-    update: no
-  become: yes
+    update: false
+  become: true
   become_user: "{{ pystemon_user }}"
 
 - name: Virtualenv pip
@@ -68,8 +67,8 @@
         dest: "{{ pystemon_root }}/pystemon.py"
         regexp: "/usr/bin/env python"
         replace: "{{ pystemon_virtualenv }}/bin/python"
-        mode: '0755'
-        backup: yes
+        mode: "0755"
+        backup: true
 
 - name: Check if existing config
   ansible.builtin.stat:
@@ -79,7 +78,7 @@
   ansible.builtin.copy:
     src: "{{ pystemon_root }}/pystemon.yaml"
     dest: "/etc/pystemon.yaml"
-    mode: '0644'
+    mode: "0644"
     remote_src: true
     owner: "{{ pystemon_user }}"
   when: not conffile.stat.exists
@@ -88,6 +87,6 @@
   ansible.builtin.template:
     src: supervisor-pystemon.conf.j2
     dest: "{{ supervisor_confdir }}/pystemon.{{ supervisor_ext }}"
-    mode: '0644'
+    mode: "0644"
   notify:
     - Supervisor update

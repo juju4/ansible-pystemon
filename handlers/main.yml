@@ -1,5 +1,4 @@
 ---
-
 - name: Supervisor update
   ansible.builtin.service:
     name: "{{ supervisor_service }}"

@@ -1,8 +1,7 @@
 ---
-
 - name: Test integration playbook
   hosts: all
   vars:
-    pystemon_virtualenv: ''
+    pystemon_virtualenv: ""
   roles:
     - juju4.pystemon

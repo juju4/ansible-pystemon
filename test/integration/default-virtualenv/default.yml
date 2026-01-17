@@ -1,5 +1,4 @@
 ---
-
 - name: Test integration playbook
   hosts: all
   roles:

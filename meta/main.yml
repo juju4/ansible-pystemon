@@ -4,7 +4,7 @@ galaxy_info:
   author: juju4
   description: Pystemon, Monitoring tool for PasteBin-alike sites written in Python
   license: BSD
-  min_ansible_version: '2.0'
+  min_ansible_version: "2.0"
   platforms:
     - name: EL
       versions:
