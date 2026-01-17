@@ -1,0 +1,24 @@
+---
+
+pystemon_pkg:
+  - git
+  # - python-yaml
+  # - python-beautifulsoup
+  # - python-requests
+  - supervisor
+  # - python-redis
+  - redis-server
+
+pystemon_python_pkgs:
+  - python3-virtualenv
+  - python3-pip
+
+pystemon_pip:
+  - PyYAML
+  - beautifulsoup4
+  - requests
+  - redis
+
+supervisor_confdir: /etc/supervisor/conf.d
+supervisor_ext: conf
+supervisor_service: supervisor
